@@ -299,7 +299,7 @@ if args.subnets is not None and not args.subnets:
 
 # ---- Host list / host file generation ----
 
-query = "SELECT dns_name,mac,ip_addr,state FROM ipaddresses WHERE "
+query = "SELECT hostname,mac,ip_addr,state FROM ipaddresses WHERE "
 
 # Don't include hosts without specified MAC addresses by default.
 if args.no_mac is False:
@@ -407,7 +407,7 @@ try:
       if args.errors == False or (args.errors == True and mac_error):
 
         if args.format == 'dhcpd':
-          entry = '{}host {} {{\n'.format(comment, host_identifier)
+          entry = '{}host {} {{\n'.format(comment, host_identifier.replace('(','').replace(')',''))
           if mac:
             entry = entry + '{}{};\n'.format(comment, '        hardware ethernet ' + mac)
           if ip:
